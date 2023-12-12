@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old Game</title>
+    <style>
+        .container2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: flex-start;
+            height: 100vh;
+            width: fit-content;
+        }
+        table {
+            border-collapse: collapse;
+            width: 500px;
+            height: 500px;
+        }
+        table, th, td {
+            border: 2px solid black;
+        }
+        th, td {
+            text-align: center;
+            height: 30px;
+            font-size: 130px;
+        }
+        h1{
+            font-size: 48px;
+            align-self: center;
+            margin-bottom: 2px;
+            margin-top: 5px;
+        }
+        p, a{
+            font-size: 24px;
+            margin-bottom: 2px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+  <div class="container2">
+    <div class="container">
+        <h1>Old Game Page</h1>
+        <p>Дата игры: {{ game.creation_date }}</p>
+        <p>Исход игры: {{ game.outcome }}</p>
+        <p>Ходы:</p>
+        <table>
+            {% for row in range(0, 3) %}
+            <tr>
+                {% for col in range(0, 3) %}
+                <td>{% if game.moves[row * 3 + col] == '1' %}X{% elif game.moves[row * 3 + col] == '2' %}O{% endif %}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ url_for('show_history_page') }}">Назад к истории игр</a>
+    </div>
+  </div>
+</body>
+</html>

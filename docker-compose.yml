@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./model/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    hostname: localhost
+    restart: always
+
+  flask-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./controller:/app/controller
+      - ./model:/app/model
+    ports:
+      - "5000:5000"
+    restart: always
+    links:
+      - db
+
+volumes:
+  db_data:
